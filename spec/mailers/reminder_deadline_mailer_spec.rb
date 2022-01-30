@@ -7,6 +7,10 @@ describe ReminderDeadlineMailer, type: :job, skip_seed: true do
 
     subject { described_class.notify_deadline(partner) }
 
+    around do |example|
+      travel_to(today) { example.run }
+    end
+
     it 'renders the subject' do
       expect(subject.subject).to eq("#{organization.name} Deadline Reminder")
     end
